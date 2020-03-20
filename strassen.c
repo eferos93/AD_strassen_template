@@ -62,7 +62,7 @@ void strassen_aux(float **C, float const *const *const A,
                   const size_t B_f_row, const size_t B_f_col,
                   const size_t n)
 {
-    if (n == 1)
+    if (n <= 128)
     {
         //
         naive_aux(C, A, B,
@@ -211,12 +211,54 @@ void strassen_aux(float **C, float const *const *const A,
     );
 
     //TODO
+
+    //C11 = P5 + P4 - P2 + P6
+    sum_matrix_blocks(C, (const float *const *const)P[4],
+                      (const float *const *const)P[3],
+                      C_f_row, C_f_col, 0, 0, 0, 0, n2);
+  //C12 = P1 + P2
+    sub_matrix_blocks(C, C, (const float *const *const)P[1],
+                      C_f_row, C_f_col,
+                      C_f_row, C_f_col,
+                      0, 0, n2);
+    sum_matrix_blocks(C, C, (const float *const *const)P[5],
+                      C_f_row, C_f_col,
+                      C_f_row, C_f_col,
+                      0, 0, n2);
+    //c12 = p1 +p2
+    sum_matrix_blocks(C, (const float *const *const)P[0],
+                      (const float *const *const)P[1],
+                      C_f_row, C_f_col+n2,
+                      0, 0,
+                      0, 0, n2);
+    //C21 = p3+p4
+    sum_matrix_blocks(C, (const float *const *const)P[2],
+                      (const float *const *const)P[4],
+                      C_f_row+n2, C_f_col,
+                      0, 0,
+                      0, 0, n2);
+    //C22 = p5 +p1-p3-p7
+    sum_matrix_blocks(C, (const float *const *const)P[0],
+                      (const float *const *const)P[2],
+                      C_f_row+n2, C_f_col+n2,
+                      0, 0,
+                      0, 0, n2);
+    sub_matrix_blocks(C, C, 
+                      (const float *const *const)P[2],
+                      C_f_row+n2, C_f_col+n2,
+                      C_f_row+n2, C_f_col+n2,
+                      0, 0, n2);
+    sub_matrix_blocks(C, C, 
+                      (const float *const *const)P[6],
+                      C_f_row+n2, C_f_col+n2,
+                      C_f_row+n2, C_f_col+n2,
+                      0, 0, n2);
 }
 void strassen_matrix_multiplication(float **C, float const *const *const A,
                                     float const *const *const B, size_t n) 
 {
  
  // IMPLEMENT THE STRASSEN'S ALGORITHM HERE
- 
+    strassen_aux(C,A,B,);
 }
 
