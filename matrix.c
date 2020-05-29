@@ -5,18 +5,26 @@
 
 void naive_matrix_multiplication(float **C, float const *const *const A,
                                  float const *const *const B,
-                                 const size_t i, const size_t k, const size_t j)
+                                 const size_t A_f_row, const size_t A_f_col,
+                                 const size_t B_f_row, const size_t B_f_col)
 {
-  for (size_t y = 0; y < i; y++)
+  if (A_f_col != B_f_row)
   {
-    for (size_t x = 0; x < j; x++)
+    fprintf(stderr, "%s", "Error! Matrix multiplicaton require the number of columns of the first matrix to be equal to the number of rows of the second.\t");
+  }
+  else
+  {
+    for (size_t y = 0; y < A_f_row; y++)
     {
-      float value = 0.0;
-      for (size_t z = 0; z < k; z++)
+      for (size_t x = 0; x < B_f_col; x++)
       {
-        value += A[y][z] * B[z][x];
+        float value = 0.0;
+        for (size_t z = 0; z < A_f_col; z++)
+        {
+          value += A[y][z] * B[z][x];
+        }
+        C[y][x] = value;
       }
-      C[y][x] = value;
     }
   }
 }
@@ -46,13 +54,7 @@ float **allocate_matrix(const size_t rows, const size_t cols)
   {
     M[i] = (float *)malloc(sizeof(float) * cols);
   }
-  for (size_t i = 0; i < rows; i++)
-  {
-    for (size_t j = 0; j < cols; j++)
-    {
-      M[i][j] = 0;
-    }
-  }
+
   return M;
 }
 

@@ -3,18 +3,19 @@
 double test(void (*f)(float **,
                       float const *const *const,
                       float const *const *const,
-                      size_t, size_t, size_t),
-            float **C, float **A, float **B, size_t i, size_t k, size_t j)
+                      size_t, size_t,
+                      size_t, size_t),
+            float **C, float **A, float **B, size_t A_f_row, size_t A_f_col, size_t B_f_row, size_t B_f_col)
 {
   struct timespec requestStart, requestEnd;
   double accum;
   size_t rep = 1;
 
   clock_gettime(CLOCK_REALTIME, &requestStart);
-  for (size_t l = 0; l < rep; l++)
+  for (size_t i = 0; i < rep; i++)
   {
     f(C, (float const *const *const)A,
-      (float const *const *const)B, i, k, j);
+      (float const *const *const)B, A_f_row, A_f_col, B_f_row, B_f_col);
   }
 
   clock_gettime(CLOCK_REALTIME, &requestEnd);
