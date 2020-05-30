@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 
 all_times = pd.read_csv("benchmark.txt", sep ="\t", header=None, skiprows=1)
