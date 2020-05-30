@@ -23,7 +23,7 @@ void naive_aux(float **C, float const *const *const A,
                const size_t n);
 
 
-void strassen_aux_improved(float **C, float const *const *const A,
+void strassen_aux_optimised(float **C, float const *const *const A,
                            float const *const *const B,
                            const size_t C_f_row, const size_t C_f_col,
                            const size_t A_f_row, const size_t A_f_col,
@@ -63,7 +63,7 @@ void strassen_aux_improved(float **C, float const *const *const A,
                     n2);
 
   // P1 = A11 x S1
-  strassen_aux_improved(P[0], A, (const float *const *const)S[0],
+  strassen_aux_optimised(P[0], A, (const float *const *const)S[0],
                         0, 0,
                         A_f_row, A_f_col,
                         0, 0,
@@ -77,7 +77,7 @@ void strassen_aux_improved(float **C, float const *const *const A,
                     n2);
 
   // P2 = S2 x B22
-  strassen_aux_improved(P[1], (const float *const *const)S[0], B,
+  strassen_aux_optimised(P[1], (const float *const *const)S[0], B,
                         0, 0,
                         0, 0,
                         B_f_row + n2, B_f_col + n2,
@@ -91,7 +91,7 @@ void strassen_aux_improved(float **C, float const *const *const A,
                     n2);
 
   // P3 = S3 x B11
-  strassen_aux_improved(P[2], (const float *const *const)S[0], B,
+  strassen_aux_optimised(P[2], (const float *const *const)S[0], B,
                         0, 0,
                         0, 0,
                         B_f_row, B_f_col,
@@ -105,7 +105,7 @@ void strassen_aux_improved(float **C, float const *const *const A,
                     n2);
 
   // P4 = A22 x S4
-  strassen_aux_improved(P[3], A, (const float *const *const)S[0],
+  strassen_aux_optimised(P[3], A, (const float *const *const)S[0],
                         0, 0,
                         A_f_row + n2, A_f_col + n2,
                         0, 0,
@@ -126,7 +126,7 @@ void strassen_aux_improved(float **C, float const *const *const A,
                     n2);
 
   // P5 = S5 x S6
-  strassen_aux_improved(P[4], (const float *const *const)S[0],
+  strassen_aux_optimised(P[4], (const float *const *const)S[0],
                         (const float *const *const)S[1],
                         0, 0,
                         0, 0,
@@ -148,7 +148,7 @@ void strassen_aux_improved(float **C, float const *const *const A,
                     n2);
 
   // P6 = S7 x S8
-  strassen_aux_improved(P[5], (const float *const *const)S[0],
+  strassen_aux_optimised(P[5], (const float *const *const)S[0],
                         (const float *const *const)S[1],
                         0, 0,
                         0, 0,
@@ -170,7 +170,7 @@ void strassen_aux_improved(float **C, float const *const *const A,
                     n2);
 
   // P7 = S9 x S10
-  strassen_aux_improved(P[6], (const float *const *const)S[0],
+  strassen_aux_optimised(P[6], (const float *const *const)S[0],
                         (const float *const *const)S[1],
                         0, 0,
                         0, 0,
@@ -250,7 +250,7 @@ void strassen_aux_improved(float **C, float const *const *const A,
  * this functions is exclusively meant to provide an
  * easy to use API
  */
-void improved_strassen_matrix_multiplication(float **C, float const *const *const A,
+void optimised_strassen_matrix_multiplication(float **C, float const *const *const A,
                                              float const *const *const B,
                                              const size_t A_f_row, const size_t A_f_col,
                                              const size_t B_f_row, const size_t B_f_col)
@@ -265,7 +265,7 @@ void improved_strassen_matrix_multiplication(float **C, float const *const *cons
   else
   {
 
-    strassen_aux_improved(C, A, B,
+    strassen_aux_optimised(C, A, B,
                           0, 0,
                           0, 0,
                           0, 0,
